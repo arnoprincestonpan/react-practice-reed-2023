@@ -3,7 +3,7 @@ import './App.css'
 import AccordionItem from './components/AccordionItem';
 
 function App() {
-  const [accordions, setAccordions] = useState([
+  const accordionsData = [
     {
       'question' : 'What are the two most common mobile operating systems?',
       'answer' : `Google has Android and Apple has the iOS.`,
@@ -29,21 +29,24 @@ function App() {
       'answer' : `The latest standard used as of 2025 is 5G. As for popularity it depends on which part of the world you may be from. 4G could be said is the most common.`,
       'button' : false,
     },
-  ])
+  ]
+
+  const [accordions, setAccordions] = useState(accordionsData);
 
   const handleToggle = (index) => {
-    setAccordions((previousAccordions) => previousAccordions.map((a, i) => (
-      i === index ? {...a, button : !a.button} : a
-    )));
-  }
+      setAccordions((previousAccordions) => previousAccordions.map((a, i) => (
+        i === index ? {...a, button : !a.button} : a
+      )));
+    }
 
   return (
     <>
       <div className='container'>
-        <h1>Accordions | FAQ for Operating Systems</h1>
+        <h1>Accordions | FAQ Operating Systems</h1>
         {
           accordions.map((accordion, index) => (
             <AccordionItem
+            key={index}
             accordion={accordion}
             index={index}
             toggleAccordion={handleToggle}

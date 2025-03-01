@@ -1,6 +1,6 @@
 function AccordionItem({ accordion, index, toggleAccordion}) {
   return (
-    <div className="card" key={index}>
+    <div className="card">
         <div className="question">
         <h3>{(index + 1)}. {accordion.question}</h3>
         <button onClick={() => toggleAccordion(index)}>+</button>
