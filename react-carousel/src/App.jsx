@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import './App.css'
+import CatCarousel from './components/CatCarousel';
 
 function App() {
-const [imageIndex, setImageIndex] = useState(0);
 const images = [
   { 
     "src" : "https://images.pexels.com/photos/1276553/pexels-photo-1276553.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -36,36 +35,12 @@ const images = [
   }
 ];
 
-const handleImage = (number) => {
-  if(number >= images.length){
-    setImageIndex(0);
-  } else if (number < 0) {
-    setImageIndex(images.length - 1)
-  } else {
-    setImageIndex(number);
-  }
-}
-
   return (
     <>
       <h1>Cat Carousel</h1>
-      <div
-        style={{"display" : "flex", "flexDirection" : "row", 'justifyContent' : 'space-between', 'alignItems' : 'center'}}
-      >
-        <button 
-        onClick={() => handleImage(imageIndex - 1)}
-        >
-          Previous
-        </button>
-        <img
-        src={images[imageIndex].src}
-        style={{"maxWidth" : "70%", "max-height" : "360px", 'margin' : '1rem'}}
-        />
-        <button 
-        onClick={() => handleImage(imageIndex + 1)}>
-          Next
-        </button>
-      </div>
+      <CatCarousel
+      images={images}
+      />
     </>
   )
 }
