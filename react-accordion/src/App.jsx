@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import './App.css'
-import AccordionItem from './components/AccordionItem';
+import AccordionItemList from './components/AccordionItemList';
 
 function App() {
   const accordionsData = [
@@ -31,29 +30,11 @@ function App() {
     },
   ]
 
-  const [accordions, setAccordions] = useState(accordionsData);
-
-  const handleToggle = (index) => {
-      setAccordions((previousAccordions) => previousAccordions.map((a, i) => (
-        i === index ? {...a, button : !a.button} : a
-      )));
-    }
-
   return (
     <>
-      <div className='container'>
-        <h1>Accordions | FAQ Operating Systems</h1>
-        {
-          accordions.map((accordion, index) => (
-            <AccordionItem
-            key={index}
-            accordion={accordion}
-            index={index}
-            toggleAccordion={handleToggle}
-            />
-          ))
-        }
-      </div>
+      <AccordionItemList
+      accordionsData={accordionsData}
+      />
     </>
   )
 }
