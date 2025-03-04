@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import quotesJSON from './data/quotes.json'
+import quotesJSON from './data/quotesJSON.json'
 import './App.css'
 
 function App() {
-  const [quotes, setQuotes] = useState([]);
+  const [quotes, setQuotes] = useState(quotesJSON);
   const [quote, setQuote] = useState(null);
 
   // // fetch handle
@@ -28,18 +28,21 @@ function App() {
   // }
 
   const selectRandomQuote = () => {
-    
+    if(quotes.length > 0) {
+      const randomIndex = Math.floor(Manth.random() * quotes.length);
+      setQuote(quotes[randomIndex]);
+    }
   }
 
   // retrieve from API as soon as page loads
   useEffect(() => {
-
-  }, [])
+    selectRandomQuote();
+  }, [quotes])
 
   return (
     <>
       <h1>React Quotes</h1>
-      <p>{quote.content}</p>
+      <p>{quote?.content}</p>
     </>
   )
 }
