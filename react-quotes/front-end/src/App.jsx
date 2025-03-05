@@ -55,8 +55,15 @@ function App() {
   return (
     <>
       <h1>React Quotes</h1>
-      <h3>{quote.author}</h3>
-      <p>"{quote.content}"</p>
+      {
+        quote && (        
+        <div>
+          <h3>{quote.author || "No Author"}</h3>
+          <p>"{quote.content || "No Quote"}"</p>
+        </div>
+        )
+      }
+      <button onClick={() => selectRandomQuote()}>Random Quote</button>
     </>
   );
 }
