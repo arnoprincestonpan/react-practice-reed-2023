@@ -1,49 +1,64 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
-  const [quotes, setQuotes] = useState(quotesJSON);
+  const [jsonFile, setJsonFile] = useState(null);
+  const [quotes, setQuotes] = useState([]);
   const [quote, setQuote] = useState(null);
 
-  // // fetch handle
-  // const getQuotes = async() => {
+  // // // fetch handle
+  const getQuotes = async () => {
+    const port = 8000;
+    const url = `http://localhost:${port}/api/quotes`;
 
-  // const URL = `https://api.quotable.io/quotes`;
+    try {
+      const response = await fetch(url);
 
-  //   try {
-  //     const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
-  //     if(!response.ok){
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //     } 
-
-  //     const data = await response.json();
-  //     setQuotes(data.results);
-
-  //   } catch (error) {
-  //     console.error('Error fetching quotes', error)
-  //     return null;
-  //   }
-  // }
+      const data = await response.json();
+      setJsonFile(data);
+    } catch (error) {
+      console.error("Error fetching quotes", error);
+      return null;
+    }
+  };
 
   const selectRandomQuote = () => {
-    if(quotes.length > 0) {
-      const randomIndex = Math.floor(Manth.random() * quotes.length);
+    if (quotes.length > 0) {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
       setQuote(quotes[randomIndex]);
     }
-  }
+  };
 
-  // retrieve from API as soon as page loads
+  // 1. Connect to the server, GET!
   useEffect(() => {
-    selectRandomQuote();
+    getQuotes();
+  }, []);
+
+  // 2. If we detect a change in jsonFile we store the jsonFile.results into Quotes
+  useEffect(() => {
+    if (jsonFile) {
+      setQuotes(jsonFile.results);
+    }
+  }, [jsonFile]);
+
+  // 3. We select a random quote from the array of quotes; given not 0
+  useEffect(() => {
+    if(quotes.length > 0){
+      selectRandomQuote();
+    }
   }, [quotes])
 
   return (
     <>
       <h1>React Quotes</h1>
-      <p>{quote?.content}</p>
+      <h3>{quote.author}</h3>
+      <p>"{quote.content}"</p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
