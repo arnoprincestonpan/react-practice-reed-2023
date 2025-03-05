@@ -10,6 +10,11 @@ function App() {
     setItems([...items, newItem])
   }
 
+  const handleDelete = (itemIndex) => {
+    const newItems = items.filter((_, index) => index !== itemIndex)
+    setItems(newItems)
+  }
+
   return (
     <>
       <h1>React Shopping List</h1>
@@ -32,9 +37,10 @@ function App() {
         (
           <ul>
             {items.map((item, index) => (
-              <li key={index}>
-                {item}
-              </li>
+              <>
+                <li key={index}>{item}</li>
+                <button onClick={() => handleDelete(index) }>Delete Item</button>
+              </>
             ))}
           </ul>
         )
